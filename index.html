@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For Charmi | Valentine 2024</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,600;1,400&family=Plus+Jakarta+Sans:wght@200;400;700&family=JetBrains+Mono:wght@300&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --pearl-base: #fdfbfb;
+            --pearl-sheen: linear-gradient(135deg, #ebedee 0%, #fdfbfb 100%);
+            --iridescent: linear-gradient(120deg, rgba(161, 196, 253, 0.2) 0%, rgba(194, 233, 251, 0.2) 100%);
+            --accent-soft: #ff9a9e;
+            --vellum-bg: rgba(255, 255, 255, 0.45);
+            --glass-stroke: rgba(255, 255, 255, 0.6);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body {
+            background: #f4f1f1;
+            background-image: 
+                radial-gradient(at 0% 0%, hsla(253,16%,7%,1) 0, transparent 50%), 
+                radial-gradient(at 50% 0%, hsla(225,39%,30%,1) 0, transparent 50%), 
+                radial-gradient(at 100% 0%, hsla(339,49%,30%,1) 0, transparent 50%);
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            overflow-x: hidden;
+            color: #2d3436;
+        }
+
+        /* Pearlescent Noise Texture overlay */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.03;
+            pointer-events: none;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3External %3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            z-index: 100;
+        }
+
+        .canvas {
+            position: relative;
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+
+        /* Layered Vellum Effect */
+        .vellum-stack {
+            position: relative;
+            width: 100%;
+            max-width: 900px;
+            aspect-ratio: 16/10;
+            perspective: 1000px;
+        }
+
+        .vellum-layer {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backdrop-filter: blur(14px) saturate(160%);
+            background: var(--vellum-bg);
+            border: 1px solid var(--glass-stroke);
+            border-radius: 4px;
+            box-shadow: 
+                0 10px 30px rgba(0,0,0,0.03),
+                inset 0 0 20px rgba(255,255,255,0.5);
+            transition: transform 0.8s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.8s;
+            display: flex;
+            flex-direction: column;
+            padding: 60px;
+        }
+
+        .layer-1 {
+            transform: rotate(-2deg) translate(-15px, -15px);
+            z-index: 1;
+            opacity: 0.6;
+        }
+
+        .layer-2 {
+            transform: rotate(1deg) translate(10px, 10px);
+            z-index: 2;
+            opacity: 0.8;
+        }
+
+        .layer-3 {
+            z-index: 3;
+            background: rgba(255, 255, 255, 0.75);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        /* Iridescent Sheen */
+        .layer-3::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(
+                135deg,
+                rgba(255,255,255,0) 0%,
+                rgba(255,255,255,0.4) 45%,
+                rgba(255,182,193,0.1) 50%,
+                rgba(255,255,255,0.4) 55%,
+                rgba(255,255,255,0) 100%
+            );
+            background-size: 200% 200%;
+            animation: sheen 8s infinite linear;
+            pointer-events: none;
+            border-radius: inherit;
+        }
+
+        @keyframes sheen {
+            0% { background-position: -200% -200%; }
+            100% { background-position: 200% 200%; }
+        }
+
+        /* Typography */
+        .mono-header {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.4em;
+            color: #888;
+            margin-bottom: 20px;
+        }
+
+        .main-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 300;
+            line-height: 0.9;
+            color: #1a1a1a;
+            margin-left: -5px;
+        }
+
+        .charmi-name {
+            font-style: italic;
+            font-weight: 600;
+            background: linear-gradient(90deg, #333, #ff8a8f, #333);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: textFlow 5s linear infinite;
+        }
+
+        @keyframes textFlow {
+            to { background-position: 200% center; }
+        }
+
+        .content-body {
+            max-width: 450px;
+            margin-top: 40px;
+        }
+
+        .content-body p {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 200;
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: #444;
+            margin-bottom: 24px;
+        }
+
+        .footer-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-top: auto;
+        }
+
+        .date-stamp {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            color: #999;
+        }
+
+        .heart-orb {
+            width: 120px;
+            height: 120px;
+            background: radial-gradient(circle at 30% 30%, #fff, #ffeef0 40%, #ffc0cb 100%);
+            border-radius: 50%;
+            position: absolute;
+            top: -40px;
+            right: -40px;
+            z-index: 4;
+            box-shadow: 
+                0 10px 40px rgba(255, 154, 158, 0.3),
+                inset -5px -5px 15px rgba(0,0,0,0.05);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-15px) scale(1.05); }
+        }
+
+        .interactive-trigger {
+            cursor: pointer;
+            border: none;
+            background: none;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            padding: 12px 24px;
+            border: 1px solid rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .interactive-trigger:hover {
+            background: #000;
+            color: #fff;
+            transform: translateY(-2px);
+        }
+
+        /* Decorative Background Elements */
+        .decor-circle {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(80px);
+            z-index: -1;
+            opacity: 0.4;
+        }
+
+        .c1 { width: 400px; height: 400px; background: #ff9a9e; top: -100px; left: -100px; }
+        .c2 { width: 300px; height: 300px; background: #a1c4fd; bottom: -50px; right: -50px; }
+
+        @media (max-width: 768px) {
+            .vellum-stack { aspect-ratio: auto; min-height: 80vh; }
+            .layer-3 { padding: 30px; }
+            .layer-1, .layer-2 { display: none; }
+            .main-title { font-size: 3.5rem; }
+            .heart-orb { width: 80px; height: 80px; top: -20px; right: 10px; }
+        }
+
+        /* Entry Animation */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: revealUp 1.2s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+        }
+
+        @keyframes revealUp {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .delay-1 { animation-delay: 0.2s; }
+        .delay-2 { animation-delay: 0.4s; }
+        .delay-3 { animation-delay: 0.6s; }
+
+    </style>
+</head>
+<body>
+
+    <div class="decor-circle c1"></div>
+    <div class="decor-circle c2"></div>
+
+    <main class="canvas">
+        <div class="vellum-stack">
+            <!-- Layers -->
+            <div class="vellum-layer layer-1"></div>
+            <div class="vellum-layer layer-2"></div>
+            
+            <div class="vellum-layer layer-3 reveal">
+                <div class="heart-orb">
+                    <svg width="30" height="30" viewBox="0 0 24 24" fill="#ff6b6b">
+                        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                    </svg>
+                </div>
+
+                <div class="header-group">
+                    <div class="mono-header reveal delay-1">Valentine MMXXIV</div>
+                    <h1 class="main-title reveal delay-2">
+                        To the one,<br>
+                        <span class="charmi-name">Charmi.</span>
+                    </h1>
+                </div>
+
+                <div class="content-body reveal delay-3">
+                    <p>
+                        Some things are written in stone, others in stars. But the way you make the world feel—that’s written in the soft light of a thousand mornings.
+                    </p>
+                    <p>
+                        This is a space made of layers, just like us. Soft, translucent, and glowing from within. Happy Valentine's Day.
+                    </p>
+                </div>
+
+                <div class="footer-meta reveal delay-3">
+                    <div class="date-stamp">
+                        COORD: 40.7128° N, 74.0060° W<br>
+                        FEB 14 2024
+                    </div>
+                    <button class="interactive-trigger" onclick="pulseHeart()">
+                        Unlock Note
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        function pulseHeart() {
+            const orb = document.querySelector('.heart-orb');
+            const body = document.querySelector('.content-body p');
+            
+            orb.style.transform = 'scale(1.5)';
+            orb.style.background = 'radial-gradient(circle at 30% 30%, #fff, #ffd1ff 40%, #ff9a9e 100%)';
+            
+            setTimeout(() => {
+                orb.style.transform = 'scale(1)';
+                alert("Charmi, you are the glow in my everyday. Stay beautiful. ❤️");
+            }, 300);
+        }
+
+        // Mouse parallax effect for vellum layers
+        document.addEventListener('mousemove', (e) => {
+            const moveX = (e.clientX - window.innerWidth / 2) * 0.01;
+            const moveY = (e.clientY - window.innerHeight / 2) * 0.01;
+            
+            document.querySelector('.layer-1').style.transform = `rotate(-2deg) translate(${moveX * -2 - 15}px, ${moveY * -2 - 15}px)`;
+            document.querySelector('.layer-2').style.transform = `rotate(1deg) translate(${moveX * 1.5 + 10}px, ${moveY * 1.5 + 10}px)`;
+            document.querySelector('.heart-orb').style.transform = `translate(${moveX * 3}px, ${moveY * 3}px)`;
+        });
+    </script>
+</body>
+</html>
