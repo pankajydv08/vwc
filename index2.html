@@ -1,1 +1,325 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For Charruu | From Panku</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Plus+Jakarta+Sans:wght@200;300;400&family=Space+Mono&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --parched-earth: #4a3728;
+            --dust: #c2a683;
+            --clay: #8b5a2b;
+            --rain-deep: #1a2a2d;
+            --petrichor-mist: rgba(212, 225, 227, 0.4);
+            --accent-gold: #d4af37;
+            --bg-color: #0f0d0c;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            cursor: none;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--dust);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            overflow: hidden;
+            height: 100vh;
+            width: 100vw;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* The Custom Cursor (Raindrop) */
+        #cursor {
+            width: 20px;
+            height: 20px;
+            background: var(--petrichor-mist);
+            border-radius: 50% 0 50% 50%;
+            transform: rotate(-45deg);
+            position: fixed;
+            pointer-events: none;
+            z-index: 1000;
+            transition: transform 0.1s ease-out;
+            box-shadow: 0 0 15px rgba(255,255,255,0.3);
+        }
+
+        /* Earth Texture Background */
+        .earth-container {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 50% 50%, rgba(74, 55, 40, 0.3) 0%, transparent 70%),
+                url('https://www.transparenttextures.com/patterns/natural-paper.png');
+            opacity: 0.6;
+            z-index: 0;
+        }
+
+        .cracks {
+            position: absolute;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 1000 1000' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.015' numOctaves='5' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            filter: contrast(150%) brightness(50%) invert(1);
+            opacity: 0.08;
+            mix-blend-mode: overlay;
+        }
+
+        /* Main Content */
+        .stage {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            width: 90%;
+            max-width: 800px;
+            perspective: 1000px;
+        }
+
+        .petrichor-label {
+            font-family: 'Space Mono', monospace;
+            text-transform: uppercase;
+            letter-spacing: 0.5em;
+            font-size: 0.7rem;
+            margin-bottom: 2rem;
+            opacity: 0.6;
+            animation: fadeIn 3s ease-in-out;
+        }
+
+        .main-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(3rem, 10vw, 6rem);
+            font-weight: 700;
+            color: var(--dust);
+            line-height: 0.9;
+            margin-bottom: 1rem;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: riseUp 1.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            animation-delay: 0.5s;
+        }
+
+        .main-title span {
+            display: block;
+            font-style: italic;
+            font-weight: 400;
+            font-size: 0.5em;
+            color: var(--clay);
+        }
+
+        .heart-note {
+            background: rgba(26, 20, 15, 0.8);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(194, 166, 131, 0.1);
+            padding: 3rem;
+            border-radius: 2px;
+            margin-top: 2rem;
+            position: relative;
+            opacity: 0;
+            transform: translateY(40px);
+            animation: riseUp 2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            animation-delay: 1.2s;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+        }
+
+        .telugu-word {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            display: block;
+            margin-bottom: 1.5rem;
+            color: var(--accent-gold);
+            text-shadow: 0 0 20px rgba(212, 175, 55, 0.2);
+        }
+
+        .message {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            font-weight: 300;
+            color: #d1c1b0;
+            margin-bottom: 2rem;
+        }
+
+        .signature {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.8rem;
+            color: var(--dust);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .signature hr {
+            width: 40px;
+            border: none;
+            border-top: 1px solid var(--clay);
+        }
+
+        /* Rain Particles Effect */
+        .rain-layer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 5;
+        }
+
+        .drop {
+            position: absolute;
+            background: linear-gradient(transparent, rgba(255,255,255,0.2));
+            width: 1px;
+            height: 80px;
+            animation: fall linear infinite;
+        }
+
+        /* Rising Vapor Effect */
+        .vapor {
+            position: absolute;
+            bottom: -50px;
+            width: 100%;
+            height: 200px;
+            background: radial-gradient(ellipse at center, rgba(200, 200, 200, 0.05) 0%, transparent 70%);
+            filter: blur(40px);
+            animation: drift 10s ease-in-out infinite;
+        }
+
+        /* Animations */
+        @keyframes riseUp {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 0.6; }
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(-100px); }
+            100% { transform: translateY(110vh); }
+        }
+
+        @keyframes drift {
+            0%, 100% { transform: translateX(-5%) translateY(0); opacity: 0.3; }
+            50% { transform: translateX(5%) translateY(-20px); opacity: 0.6; }
+        }
+
+        /* Interaction States */
+        .heart-note:hover {
+            border-color: rgba(212, 175, 55, 0.3);
+            background: rgba(30, 25, 20, 0.9);
+            transition: all 0.5s ease;
+        }
+
+        .flower-icon {
+            font-size: 1.5rem;
+            margin-top: 1.5rem;
+            display: block;
+            filter: sepia(1) saturate(0.5);
+            opacity: 0.7;
+        }
+
+        .highlight {
+            color: var(--accent-gold);
+            font-weight: 400;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .heart-note { padding: 1.5rem; }
+            .main-title { font-size: 3.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="cursor"></div>
+
+    <div class="earth-container">
+        <div class="cracks"></div>
+    </div>
+
+    <div class="rain-layer" id="rainLayer"></div>
+    <div class="vapor"></div>
+
+    <div class="stage">
+        <div class="petrichor-label">Petrichor: The smell of earth after rain</div>
+        
+        <h1 class="main-title">
+            Charruu<span>Bangaram</span>
+        </h1>
+
+        <div class="heart-note">
+            <span class="telugu-word">క్షమించు (Kshaminchu)</span>
+            
+            <p class="message">
+                Like the sun-parched earth of our Telugu heartlands, <br>
+                I was burning too bright with anger, drying up the softness between us. <br>
+                I said things I didn't mean, words that felt like heatwaves. <br><br>
+                But you are the <span class="highlight">rain</span> I've been waiting for. <br>
+                Please forgive your <span class="highlight">Panku</span>. <br>
+                Let this be the moment the storm ends and the petrichor rises.
+            </p>
+
+            <div class="signature">
+                <hr>
+                <span>Only Yours, Panku</span>
+                <hr>
+            </div>
+            
+            <span class="flower-icon">🌼</span>
+        </div>
+    </div>
+
+    <script>
+        // Custom Cursor Movement
+        const cursor = document.getElementById('cursor');
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+
+        // Generate Rain Drops
+        const rainLayer = document.getElementById('rainLayer');
+        const dropCount = 40;
+
+        for (let i = 0; i < dropCount; i++) {
+            const drop = document.createElement('div');
+            drop.className = 'drop';
+            drop.style.left = Math.random() * 100 + 'vw';
+            drop.style.animationDuration = (Math.random() * 1 + 0.5) + 's';
+            drop.style.animationDelay = Math.random() * 2 + 's';
+            drop.style.opacity = Math.random() * 0.3;
+            rainLayer.appendChild(drop);
+        }
+
+        // Interaction: Soften the "Earth" on click
+        document.addEventListener('mousedown', () => {
+            cursor.style.transform = 'rotate(-45deg) scale(0.8)';
+            document.querySelector('.earth-container').style.filter = 'brightness(1.2) saturate(1.2)';
+            document.querySelector('.earth-container').style.transition = 'filter 0.3s ease';
+        });
+
+        document.addEventListener('mouseup', () => {
+            cursor.style.transform = 'rotate(-45deg) scale(1)';
+            document.querySelector('.earth-container').style.filter = 'brightness(1) saturate(1)';
+        });
+
+        // Subtle parallax effect for the heart-note
+        document.addEventListener('mousemove', (e) => {
+            const note = document.querySelector('.heart-note');
+            const x = (window.innerWidth / 2 - e.clientX) / 50;
+            const y = (window.innerHeight / 2 - e.clientY) / 50;
+            note.style.transform = `translateY(0) rotateY(${x}deg) rotateX(${-y}deg)`;
+        });
+    </script>
+</body>
+</html>
