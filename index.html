@@ -220,6 +220,32 @@
             }
         }
 
+        /* Navigation Button */
+        .btn-navigate {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+            background: transparent;
+            border: 1px solid var(--gold);
+            color: var(--gold);
+            padding: 10px 24px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.4s ease;
+        }
+
+        .btn-navigate:hover {
+            background: var(--gold);
+            color: var(--indigo-dark);
+            box-shadow: 0 0 20px rgba(197, 160, 89, 0.4);
+        }
+
         /* The "Repair" Animation */
         .repaired .gilded-seam {
             width: 4px;
@@ -231,6 +257,7 @@
 <body>
 
     <div class="silk-canvas" id="canvas">
+        <a href="index2.html" class="btn-navigate">Next Page</a>
         <div class="gilded-seam"></div>
         
         <!-- Background Elements -->
