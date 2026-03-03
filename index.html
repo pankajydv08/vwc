@@ -3,16 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>For Charruu</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;700&family=JetBrains+Mono:wght@300&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
+    <title>Holi Wishes | Charmi</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@900&family=Space+Mono&display=swap" rel="stylesheet">
     <style>
         :root {
-            --indigo-dark: #0a0e1a;
-            --indigo-silk: #1a1f3c;
-            --gold: #c5a059;
-            --gold-glow: #ffdf91;
-            --text-main: #e0e0e0;
-            --accent-red: #8b0000;
+            --bg: #f4f4f2;
+            --pink: #ff0080;
+            --yellow: #ffde00;
+            --cyan: #00e5ff;
+            --purple: #7a00ff;
+            --black: #121212;
         }
 
         * {
@@ -22,322 +24,241 @@
         }
 
         body {
-            background-color: var(--indigo-dark);
-            color: var(--text-main);
-            font-family: 'Inter', sans-serif;
-            overflow-x: hidden;
+            background-color: var(--bg);
+            font-family: 'Outfit', sans-serif;
+            overflow: hidden;
             height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
         }
 
-        /* The Silk Canvas */
-        .silk-canvas {
+        /* TACTILE GRAIN FILTER */
+        .noise-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 100;
+            opacity: 0.12;
+            mix-blend-mode: multiply;
+        }
+
+        .stage {
             position: relative;
             width: 90vw;
             max-width: 1000px;
             height: 80vh;
-            background: linear-gradient(135deg, var(--indigo-silk) 0%, #0d1127 100%);
-            box-shadow: 0 50px 100px rgba(0,0,0,0.8);
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            padding: 60px;
-            border: 1px solid rgba(197, 160, 89, 0.1);
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            grid-template-rows: repeat(12, 1fr);
         }
 
-        /* Silk Texture Overlay */
-        .silk-canvas::before {
-            content: "";
+        /* CHROMATIC OVERLAY LAYERS */
+        .chroma-shape {
             position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3ExternalLink %3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-            opacity: 0.04;
-            pointer-events: none;
-        }
-
-        /* The Tear and Gilded Seam */
-        .gilded-seam {
-            position: absolute;
-            top: 0;
-            left: 50%;
-            width: 2px;
-            height: 100%;
-            background: var(--gold);
-            transform: translateX(-50%);
-            box-shadow: 0 0 15px var(--gold-glow);
-            z-index: 2;
-        }
-
-        .gilded-seam::after {
-            content: "క్షమించు"; /* Telugu: Forgive */
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) rotate(-90deg);
-            background: var(--indigo-dark);
-            padding: 10px 20px;
-            color: var(--gold);
-            font-family: 'Playfair Display', serif;
-            font-size: 0.8rem;
-            letter-spacing: 4px;
-            border: 1px solid var(--gold);
-            white-space: nowrap;
-        }
-
-        /* Fragmented Layout */
-        .content-left {
-            width: 45%;
-            z-index: 3;
-        }
-
-        .content-right {
-            align-self: flex-end;
-            text-align: right;
-            width: 45%;
-            z-index: 3;
-            margin-top: auto;
-        }
-
-        /* Typography */
-        h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(2rem, 5vw, 4rem);
-            line-height: 1.1;
-            margin-bottom: 20px;
+            filter: blur(40px);
+            mix-blend-mode: multiply;
             opacity: 0;
-            transform: translateY(20px);
-            animation: reveal 1s forwards 0.5s;
+            transform: scale(0.8);
+            animation: layer-entry 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
-        .italic-serif {
+        .shape-1 {
+            width: 400px; height: 400px;
+            background: var(--pink);
+            top: 10%; left: 10%;
+            animation-delay: 0.1s;
+        }
+
+        .shape-2 {
+            width: 350px; height: 350px;
+            background: var(--yellow);
+            bottom: 10%; right: 15%;
+            animation-delay: 0.3s;
+        }
+
+        .shape-3 {
+            width: 300px; height: 300px;
+            background: var(--cyan);
+            top: 30%; right: 5%;
+            animation-delay: 0.5s;
+        }
+
+        /* TYPOGRAPHY HIERARCHY */
+        .main-title {
+            grid-column: 1 / 10;
+            grid-row: 3 / 7;
+            font-size: clamp(5rem, 15vw, 12rem);
+            line-height: 0.85;
+            color: var(--black);
+            z-index: 10;
+            letter-spacing: -0.04em;
+            text-transform: uppercase;
+            mix-blend-mode: darken;
+        }
+
+        .recipient {
+            grid-column: 7 / 13;
+            grid-row: 7 / 9;
+            font-size: clamp(3rem, 10vw, 8rem);
+            color: var(--pink);
+            z-index: 11;
+            text-align: right;
+            transform: translateY(-20px);
             font-style: italic;
-            font-weight: 400;
-            color: var(--gold);
+        }
+
+        .wish-block {
+            grid-column: 2 / 6;
+            grid-row: 9 / 12;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            color: var(--black);
+            text-transform: uppercase;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(0,0,0,0.1);
+            z-index: 20;
         }
 
         .meta-data {
-            font-family: 'JetBrains Mono', monospace;
+            grid-column: 10 / 13;
+            grid-row: 2 / 3;
+            font-family: 'Space Mono', monospace;
             font-size: 0.7rem;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            color: var(--gold);
-            margin-bottom: 10px;
-            display: block;
+            text-align: right;
+            letter-spacing: 0.1em;
+            opacity: 0.6;
         }
 
-        .apology-text {
-            font-size: 1.1rem;
-            line-height: 1.6;
-            font-weight: 300;
-            max-width: 400px;
-            color: rgba(224, 224, 224, 0.8);
-            opacity: 0;
-            animation: reveal 1.2s forwards 0.8s;
-        }
-
-        /* Decorative Elements */
-        .gold-thread {
+        /* INTERACTIVE ELEMENTS */
+        .btn-interact {
             position: absolute;
-            width: 100px;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, var(--gold), transparent);
-        }
-
-        /* Interactions */
-        .btn-mend {
-            margin-top: 40px;
-            background: transparent;
-            border: 1px solid var(--gold);
-            color: var(--gold);
-            padding: 15px 30px;
-            font-family: 'JetBrains Mono', monospace;
+            bottom: 5%;
+            right: 5%;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 1px solid var(--black);
+            display: flex;
+            align-items: center;
+            justify-content: center;
             cursor: pointer;
-            transition: all 0.4s ease;
-            position: relative;
-            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            background: transparent;
+            z-index: 50;
         }
 
-        .btn-mend:hover {
-            background: var(--gold);
-            color: var(--indigo-dark);
-            box-shadow: 0 0 20px rgba(197, 160, 89, 0.4);
+        .btn-interact:hover {
+            background: var(--black);
+            transform: scale(1.1) rotate(90deg);
         }
 
-        .initials {
-            position: absolute;
-            bottom: 40px;
-            left: 60px;
-            font-family: 'Playfair Display', serif;
-            font-size: 5rem;
-            opacity: 0.05;
-            user-select: none;
+        .btn-interact:hover svg {
+            stroke: white;
         }
 
-        @keyframes reveal {
+        /* ANIMATIONS */
+        @keyframes layer-entry {
+            to {
+                opacity: 0.6;
+                transform: scale(1);
+            }
+        }
+
+        .char-reveal span {
+            display: inline-block;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: char-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes char-up {
             to {
                 opacity: 1;
                 transform: translateY(0);
             }
         }
 
-        @keyframes flicker {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.7; }
-        }
-
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 4px;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: var(--gold);
-        }
-
-        /* Mobile Adjustments */
-        @media (max-width: 768px) {
-            .silk-canvas {
-                padding: 30px;
-                height: 90vh;
-            }
-            .content-left, .content-right {
-                width: 100%;
-                text-align: left;
-            }
-            .gilded-seam {
-                left: 10px;
-            }
-            .gilded-seam::after {
-                left: 0;
-                transform: rotate(0) translateY(-50%);
-            }
-            .initials {
-                font-size: 3rem;
-                bottom: 20px;
-                right: 20px;
-                left: auto;
-            }
-        }
-
-        /* Navigation Button */
-        .btn-navigate {
+        /* CURSOR TRAIL EFFECT (TACTILE SHIFT) */
+        .overlay-wrap {
             position: absolute;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 10;
-            background: transparent;
-            border: 1px solid var(--gold);
-            color: var(--gold);
-            padding: 10px 24px;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.75rem;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            text-decoration: none;
-            cursor: pointer;
-            transition: all 0.4s ease;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.2s ease-out;
         }
 
-        .btn-navigate:hover {
-            background: var(--gold);
-            color: var(--indigo-dark);
-            box-shadow: 0 0 20px rgba(197, 160, 89, 0.4);
-        }
-
-        /* The "Repair" Animation */
-        .repaired .gilded-seam {
-            width: 4px;
-            box-shadow: 0 0 40px var(--gold-glow);
-            transition: all 2s ease;
-        }
     </style>
 </head>
 <body>
 
-    <div class="silk-canvas" id="canvas">
-        <a href="index2.html" class="btn-navigate">Next Page</a>
-        <div class="gilded-seam"></div>
-        
-        <!-- Background Elements -->
-        <div class="initials">C & P</div>
-        
-        <div class="content-left">
-            <span class="meta-data">To: Charruu // My Heart</span>
-            <h1>I am <span class="italic-serif">sorry</span>.</h1>
-            <p class="apology-text">
-                Anger is a temporary madness that leaves behind a permanent ache. I said words I didn't mean, words that don't belong in the space between us.
-            </p>
+    <svg class="noise-canvas">
+        <filter id='noiseFilter'>
+            <feTurbulence type='fractalNoise' baseFrequency='0.6' numOctaves='3' stitchTiles='stitch'/>
+        </filter>
+        <rect width='100%' height='100%' filter='url(#noiseFilter)'/>
+    </svg>
+
+    <div class="stage" id="stage">
+        <div class="overlay-wrap" id="overlayWrap">
+            <div class="chroma-shape shape-1"></div>
+            <div class="chroma-shape shape-2"></div>
+            <div class="chroma-shape shape-3"></div>
         </div>
 
-        <div class="content-right">
-            <span class="meta-data">From: Panku</span>
-            <p class="apology-text" style="margin-left: auto;">
-                You are the gold that mends the cracks in my world. Please let me earn back the smile that I foolishly clouded. 
-                <br><br>
-                <span style="font-family: 'Playfair Display', serif; font-style: italic; color: var(--gold); font-size: 1.4rem;">
-                    Bangaru, forgive me?
-                </span>
-            </p>
-            <button class="btn-mend" onclick="mendHeart()">MEND THE SEAM</button>
+        <div class="meta-data">
+            FESTIVAL OF COLORS<br>SPRING MMXXIV
         </div>
 
-        <!-- Decorative Floating Threads -->
-        <div class="gold-thread" style="top: 20%; left: 10%; transform: rotate(15deg);"></div>
-        <div class="gold-thread" style="bottom: 30%; right: 5%; transform: rotate(-20deg);"></div>
+        <h1 class="main-title char-reveal" id="titleHoli">
+            <span>HAPPY</span><br><span>HOLI</span>
+        </h1>
+
+        <div class="recipient char-reveal">
+            <span style="animation-delay: 0.5s;">CHARMI</span>
+        </div>
+
+        <div class="wish-block">
+            <p>May your life be as tactile and vibrant as the colors of Gulal. Wishing you a chromatic spectrum of joy, health, and infinite creative energy.</p>
+        </div>
+
+        <button class="btn-interact" onclick="shuffleColors()">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 12a9 9 0 1 1-6.219-8.56"/>
+            </svg>
+        </button>
     </div>
 
     <script>
-        function mendHeart() {
-            const canvas = document.getElementById('canvas');
-            const btn = document.querySelector('.btn-mend');
-            
-            canvas.classList.add('repaired');
-            btn.innerHTML = "HEALING...";
-            
-            // Create "Sparkle" effect
-            for(let i=0; i<20; i++) {
-                createSparkle();
-            }
-
-            setTimeout(() => {
-                btn.innerHTML = "I LOVE YOU";
-                btn.style.borderColor = "#fff";
-                btn.style.color = "#fff";
-            }, 2000);
-        }
-
-        function createSparkle() {
-            const sparkle = document.createElement('div');
-            sparkle.style.position = 'absolute';
-            sparkle.style.width = '2px';
-            sparkle.style.height = '2px';
-            sparkle.style.background = 'var(--gold-glow)';
-            sparkle.style.left = '50%';
-            sparkle.style.top = Math.random() * 100 + '%';
-            sparkle.style.boxShadow = '0 0 10px var(--gold-glow)';
-            sparkle.style.zIndex = '5';
-            
-            document.getElementById('canvas').appendChild(sparkle);
-
-            const destination = (Math.random() - 0.5) * 500;
-            
-            sparkle.animate([
-                { transform: 'translate(0, 0) scale(1)', opacity: 1 },
-                { transform: `translate(${destination}px, ${(Math.random() - 0.5) * 500}px) scale(0)`, opacity: 0 }
-            ], {
-                duration: 1000 + Math.random() * 2000,
-                easing: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)'
-            }).onfinish = () => sparkle.remove();
-        }
-
-        // Subtle parallax movement
-        document.addEventListener('mousemove', (e) => {
-            const x = (e.clientX / window.innerWidth - 0.5) * 20;
-            const y = (e.clientY / window.innerHeight - 0.5) * 20;
-            document.querySelector('.silk-canvas').style.transform = `perspective(1000px) rotateY(${x}deg) rotateX(${-y}deg)`;
+        // Staggered text animation
+        const spans = document.querySelectorAll('.char-reveal span');
+        spans.forEach((span, i) => {
+            span.style.animationDelay = `${0.2 + (i * 0.1)}s`;
         });
+
+        // Tactile mouse movement
+        const stage = document.getElementById('stage');
+        const overlay = document.getElementById('overlayWrap');
+        
+        document.addEventListener('mousemove', (e) => {
+            const x = (window.innerWidth / 2 - e.pageX) / 40;
+            const y = (window.innerHeight / 2 - e.pageY) / 40;
+            overlay.style.transform = `translateX(${x}px) translateY(${y}px)`;
+        });
+
+        // Color shuffle interaction
+        function shuffleColors() {
+            const colors = ['#ff0080', '#ffde00', '#00e5ff', '#7a00ff', '#ff5722', '#4caf50'];
+            const shapes = document.querySelectorAll('.chroma-shape');
+            shapes.forEach(shape => {
+                const randomColor = colors[Math.floor(Math.random() * colors.length)];
+                shape.style.background = randomColor;
+                shape.style.transform = `scale(${0.8 + Math.random()}) translate(${Math.random()*50}px, ${Math.random()*50}px)`;
+            });
+        }
     </script>
 </body>
 </html>
